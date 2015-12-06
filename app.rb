@@ -31,7 +31,7 @@ def start(time, params)
         user_id: params['user_id'],
         runner: params['user_name'],
         time: time)
-      respond_in_channel "@group! #{run.runner} is going on a coffee run in #{time} minutes! :coffee:\nLet them know what you want with `/coffee order [item]`."
+      respond_in_channel "<!channel> #{run.runner} is going on a coffee run in #{time} minutes! :coffee:\nLet them know what you want with `/coffee order [item]`."
     end
   end
 end
@@ -64,7 +64,7 @@ end
 def here(params)
   if run = current_user_run(params)
     run.update(active: false)
-    respond_in_channel "@group! #{run.runner} is here with coffee! Grab it while it's hot! :coffee:"
+    respond_in_channel "<!channel> #{run.runner} is here with coffee! Grab it while it's hot! :coffee:"
   else
     respond "Seems like you weren't on a run :confused:"
   end
