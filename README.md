@@ -12,9 +12,9 @@ To do so:
 
 1. Clone this repository
 2. Deploy it you your server of choice ([Heroku](http://heroku.com/) works well)
-3. Go to your slack teams integration list
+3. Go to your slack team's integration list
 4. Add a slash command for `/coffee`
-5. Set it to point to your url with a '/coffee' at the end
+5. Set it to point to your url with a '/coffee' at the end (e.g. `http://yourawesomedomain.com/coffee`)
 6. Set the method to `POST`
 7. Name it whatever you like and fill in all the descriptions if you wish
 8. Done! :tada:
