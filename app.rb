@@ -5,7 +5,7 @@ require './models/run'
 require './models/order'
 require './config/environments'
 
-get '/coffee' do
+post '/coffee' do
   content_type :json
 
   args = params['text'].split
