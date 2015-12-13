@@ -23,30 +23,30 @@ To do so:
 
 There are 5 commands to know:
 
-### `/coffee run [time]`
+#### `/coffee run [time]`
 
-Start a coffee run!
+Start a coffee run!  
 example: `/coffee run 15`
 
-### `/coffee list`
+#### `/coffee list`
 
-Show the list of orders for the current run.
+Show the list of orders for the current run.  
 example: `/coffee list`
 
-### `/coffee order [item]`
+#### `/coffee order [item]`
 
-Order something from the current run.
+Order something from the current run.  
 example: `/coffee order small cappuccino`
 
-### `/coffee here`
+#### `/coffee here`
 
 Let everyone know that the coffee is here!
-This is needed so that others can start new runs later on.
+This is needed so that others can start new runs later on.  
 example: `/coffee here`
 
-### `/coffee help`
+#### `/coffee help`
 
-Show a help message detailing the available commands.
+Show a help message detailing the available commands.  
 example: `/coffee help`
 
 ## Contributing
