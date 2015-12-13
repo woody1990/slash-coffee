@@ -1,10 +1,11 @@
 require 'sinatra'
 require 'sinatra/activerecord'
+require './config/i18n'
 require './models/run'
 require './models/order'
 require './config/environments'
 
-post '/coffee' do
+get '/coffee' do
   content_type :json
 
   args = params['text'].split
@@ -20,10 +21,10 @@ end
 
 def start(time, params)
   if run = current_team_run(params)
-    respond "#{run.runner} is already on a run! If that's not true, tell them to type `/coffee here` to signal that they came back."
+    respond I18n.t('start.already_on_run', name: run.runner)
   else
     if time.nil?
-      respond 'Let the team know in how many minutes you are leaving. For example, `/coffee run 15`'
+      respond I18n.t('start.time_missing')
     else
       run = Run.create(
         team_id: params['team_id'], 
@@ -31,7 +32,7 @@ def start(time, params)
         user_id: params['user_id'],
         runner: params['user_name'],
         time: time)
-      respond_in_channel "<!here|here> #{run.runner} is going on a coffee run in #{time} minutes! :coffee:\nLet them know what you want with `/coffee order [item]`."
+      respond_in_channel I18n.t('start.success', name: run.runner, time: time)
     end
   end
 end
@@ -39,39 +40,43 @@ end
 def order(user, item, params)
   if run = current_team_run(params)
     if item.nil?
-      respond "#{run.runner} needs to know what you want! Try `/coffee order cappuccino` for example."
+      respond I18n.t('order.order_missing', name: run.runner)
     else
       run.orders.create(orderer: user, item: item)
-      respond "Great! Your #{item} was added to the list."
+      respond I18n.t('order.success', item: item)
     end
   else
-    respond 'No one is on a run now. Use `/coffee run` to go yourself!'
+    respond I18n.t('order.no_run')
   end
 end
 
 def list(params)
   if run = current_team_run(params)
-    list = ['This is the list for the current run:']
-    run.orders.each_with_index do |order, index|
-      list << "#{index + 1}. #{order.item} for #{order.orderer}"
+    if run.orders.empty?
+      respond I18n.t('no_orders')
+    else
+      list = [I18n.t('lists.list_header')]
+      run.orders.each_with_index do |order, index|
+        list << I18n.t('list_item', index: index, item: order.item, name: order.orderer)
+      end
+      respond list.join("\n")
     end
-    respond list.join("\n")
   else
-    respond 'No one is on a run now. Use `/coffee run` to go yourself!'
+    respond I18n.t('list.no_run')
   end
 end
 
 def here(params)
   if run = current_user_run(params)
     run.update(active: false)
-    respond_in_channel "<!here|here> #{run.runner} is here with coffee! Grab it while it's hot! :coffee:"
+    respond_in_channel I18n.t('here.success', name: run.runner)
   else
-    respond "Seems like you weren't on a run :confused:"
+    respond I18n.t('here.no_run')
   end
 end
 
 def help
-  respond help_text
+  respond I18n.t('help')
 end
 
 def current_user_run(params)
@@ -88,35 +93,4 @@ end
 
 def respond_in_channel(text)
   {response_type: 'in_channel', text: text}
-end
-
-def help_text
-<<-HELP
-/coffee is a slash command to organize coffee runs.
-
-Here are the available commands:
-
-  /coffee run [time]
-    Start a coffee run!
-    Optionally, anounce in how long you'll be leaving.
-    example: /coffee run 15
-
-  /coffee list
-    Show the list of orders for the current run.
-    example: /coffee list
-
-  /coffee order [item]
-    Order something from the current run.
-    example: /coffee order small cappuccino
-
-  /coffee here
-    Let everyone know that the coffee is here!
-    example: /coffee here
-
-  /coffee help
-    Show this help message.
-    example: /coffee help
-
-Enjoy!
-HELP
 end
