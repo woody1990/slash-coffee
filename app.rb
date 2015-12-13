@@ -11,7 +11,7 @@ post '/coffee' do
   args = params['text'].split
   response = case args.first
   when 'run' then start(args[1], params)
-  when 'order' then order(params['user_name'], args[1], params)
+  when 'order' then order(params['user_name'], args[1..-1].join(' '), params)
   when 'list' then list(params)
   when 'here' then here(params)
   else help
