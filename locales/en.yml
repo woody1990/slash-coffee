@@ -16,7 +16,7 @@ en:
     no_run: "Seems like you weren't on a run, are you in the right channel? :confused:"
     success: "<!here|here> %{name} is here with coffee! Grab it while it's hot! :coffee:"
   help: |
-    /coffee is a slash command to organize coffee runs.
+    `/coffee` is a slash command to organize coffee runs.
 
       Here are the available commands:
 
