@@ -20,7 +20,7 @@ get '/coffee' do
 end
 
 def start(time, params)
-  if run = current_team_run(params)
+  if run = current_channel_run(params)
     respond I18n.t('start.already_on_run', name: run.runner)
   else
     if time.nil?
@@ -38,7 +38,7 @@ def start(time, params)
 end
 
 def order(user, item, params)
-  if run = current_team_run(params)
+  if run = current_channel_run(params)
     if item.nil?
       respond I18n.t('order.order_missing', name: run.runner)
     else
@@ -51,7 +51,7 @@ def order(user, item, params)
 end
 
 def list(params)
-  if run = current_team_run(params)
+  if run = current_channel_run(params)
     if run.orders.empty?
       respond I18n.t('no_orders')
     else
@@ -80,11 +80,11 @@ def help
 end
 
 def current_user_run(params)
-  Run.active.in_team(params['team_id']).by_user(params['user_id']).first
+  Run.active.in_channel(params['team_id'], params['channel_id']).by_user(params['user_id']).first
 end
 
-def current_team_run(params)
-   Run.active.in_team(params['team_id']).first
+def current_channel_run(params)
+   Run.active.in_channel(params['team_id'], params['channel_id']).first
 end
 
 def respond(text)
