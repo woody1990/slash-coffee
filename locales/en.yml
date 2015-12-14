@@ -10,8 +10,8 @@ en:
   list:
     no_run: "No one is on a run now, are you in the right channel?\nAlternatively, use `/coffee run` to go yourself!"
     no_orders: 'No one has ordered anything yet.'
-    list_header: 'This is the list for the current run:'
-    list_item: "%{index}. %{item} for %{name}"
+    success_header: 'This is the list for the current run:'
+    success_item: "%{index}. %{item} for %{name}"
   here:
     no_run: "Seems like you weren't on a run, are you in the right channel? :confused:"
     success: "<!here|here> %{name} is here with coffee! Grab it while it's hot! :coffee:"
