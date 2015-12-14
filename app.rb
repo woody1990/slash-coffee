@@ -57,7 +57,7 @@ def list(params)
     else
       list = [I18n.t('list.success_header')]
       run.orders.each_with_index do |order, index|
-        list << I18n.t('list.success_item', index: index, item: order.item, name: order.orderer)
+        list << I18n.t('list.success_item', index: index + 1, item: order.item, name: order.orderer)
       end
       respond list.join("\n")
     end
