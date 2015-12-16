@@ -81,16 +81,16 @@ end
 
 def current_user_run(params)
   run = Run.active.in_channel(params['team_id'], params['channel_id']).by_user(params['user_id']).first
-  deactivate_if_timed_out(run) if run.present? else nil
+  deactivate_if_timed_out(run)
 end
 
 def current_channel_run(params)
    run = Run.active.in_channel(params['team_id'], params['channel_id']).first
-   deactivate_if_timed_out(run) if run.present? else nil
+   deactivate_if_timed_out(run)
 end
 
 def deactivate_if_timed_out(run)
-  if run.timed_out?
+  if run && run.timed_out?
     run.update(active: false)
     nil
   else
