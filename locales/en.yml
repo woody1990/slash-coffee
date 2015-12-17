@@ -2,7 +2,7 @@ en:
   start:
     already_on_run: "%{name} is already on a run! If that's not true, tell them to type `/coffee here` to signal that they came back."
     time_missing: 'Let the team know in how many minutes you are leaving. For example, `/coffee run 15`'
-    success: "<!here|here> %{name} is going on a coffee run in %{time} minutes! :coffee:\nLet them know what you want with `/coffee order [item]`."
+    success: "<!here> %{name} is going on a coffee run in %{time} minutes! :coffee:\nLet them know what you want with `/coffee order [item]`."
   order:
     no_run: "No one is on a run now, are you in the right channel?\nAlternatively, use `/coffee run` to go yourself!"
     order_missing: "%{name} needs to know what you want! Try `/coffee order cappuccino` for example."
@@ -14,7 +14,7 @@ en:
     success_item: "%{index}. %{item} for %{name}"
   here:
     no_run: "Seems like you weren't on a run, are you in the right channel? :confused:"
-    success: "<!here|here> %{name} is here with coffee! Grab it while it's hot! :coffee:"
+    success: "<!here> %{name} is here with coffee! Grab it while it's hot! :coffee:"
   help: |
     `/coffee` is a slash command to organize coffee runs.
 
