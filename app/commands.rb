@@ -64,7 +64,7 @@ class Commands
 
   def self.here(params)
     if run = current_user_run(params)
-      tags = run.orders.map { |order| "<#{order.orderer_id}|#{order.orderer}>" }.join(' ')
+      tags = run.orders.map { |order| "<@#{order.orderer_id}>" }.join(' ')
       run.update(active: false)
       respond_in_channel I18n.t('commands.here.success', tags: tags, name: run.runner)
     else
