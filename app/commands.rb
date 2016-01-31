@@ -6,7 +6,7 @@ class Commands
     args = params['text'].split
     response = case args.first
       when 'run' then start(args[1], params)
-      when 'order' then order(params['user_name'], args[1..-1].join(' '), params)
+      when 'order' then order(params['user_name'], params['user_id'], args[1..-1].join(' '), params)
       when 'list' then list(params)
       when 'here' then here(params)
       else help
@@ -33,12 +33,12 @@ class Commands
     end
   end
 
-  def self.order(user, item, params)
+  def self.order(user_name, user_id, item, params)
     if run = current_channel_run(params)
       if item.nil?
         respond I18n.t('commands.order.order_missing', name: run.runner)
       else
-        run.orders.create(orderer: user, item: item)
+        run.orders.create(orderer: user_name, orderer_id: user_id, item: item)
         respond I18n.t('commands.order.success', item: item)
       end
     else
@@ -64,8 +64,9 @@ class Commands
 
   def self.here(params)
     if run = current_user_run(params)
+      tags = run.orders.map { |order| "<#{order.orderer_id}|#{order.orderer}>" }.join(' ')
       run.update(active: false)
-      respond_in_channel I18n.t('commands.here.success', name: run.runner)
+      respond_in_channel I18n.t('commands.here.success', tags: tags, name: run.runner)
     else
       respond I18n.t('commands.here.no_run')
     end
