@@ -17,7 +17,8 @@ en:
       success_item: "%{index}. %{item} for %{name}"
     here:
       no_run: "Seems like you weren't on a run, are you in the right channel? :confused:"
-      success: "%{tags}: %{name} is here with coffee! Grab it while it's hot! :coffee:"
+      success: "Welcome back! Enjoy the rest of your day."
+      success_with_tags: "%{tags}: %{name} is here with coffee! Grab it while it's hot! :coffee:"
     help: |
       `/coffee` is a slash command to organize coffee runs.
 
