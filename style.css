@@ -1,0 +1,84 @@
+/* Super minimal reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
+}
+
+.install-button {
+  display: inline-block;
+  padding: 2rem 0;
+}
+
+header {
+  padding: 3rem;
+  text-align: center;
+}
+
+header .emojis {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+header h1 {
+  margin-bottom: 2rem;
+  font-size: 5rem;
+}
+
+header p {
+  font-size: 2rem;
+}
+
+main .usage {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+main h3 {
+  margin-bottom: 1rem;
+}
+
+main .message {
+  margin-bottom: 1rem;
+  padding: 0.7rem;
+  border: 2px solid #E0E0E0;
+  border-radius: 6px;
+}
+
+main .response {
+  margin-bottom: 2rem;
+}
+
+main .response.single-line {
+  height: 50px;
+}
+
+main .response.double-line {
+  height: 70px;
+}
+
+main .installation {
+  text-align: center
+}
+
+footer {
+  padding: 2rem;
+  text-align: center;
+}
+
+footer p {
+  margin-bottom: 0.5rem;
+}
