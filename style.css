@@ -24,14 +24,18 @@ body {
   padding-top: 2rem;
 }
 
+.colored {
+  background-image: linear-gradient(to bottom right, #ffca34 0%, #ffb32c 100%);
+  background-color: #ffb32c;
+}
+
 header {
   padding: 3rem;
-  background-color: #E8C480;
   text-align: center;
 }
 
-header .emojis {
-  font-size: 3rem;
+header .coffee {
+  width: 16rem;
   margin-bottom: 1rem;
 }
 
@@ -60,12 +64,13 @@ main h2 {
 main .message {
   margin-bottom: 1.5rem;
   padding: 0.7rem;
-  border: 2px solid #E0E0E0;
+  border: 2px solid #e0e0e0;
   border-radius: 6px;
 }
 
 main .response {
   margin-bottom: 3rem;
+  max-width: 100%;
 }
 
 main .response.single-line {
@@ -76,13 +81,19 @@ main .response.double-line {
   height: 70px;
 }
 
+@media (max-width: 600px) {
+  main .response.single-line,
+  main .response.double-line {
+    height: auto;
+  }
+}
+
 main .installation {
   text-align: center
 }
 
 footer {
   padding: 2.5rem;
-  background-color: #E8C480;
   text-align: center;
 }
 
