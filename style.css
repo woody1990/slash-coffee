@@ -59,6 +59,7 @@ main .usage {
 
 main h2 {
   margin-bottom: 1rem;
+  line-height: 1.2;
 }
 
 main .message {
