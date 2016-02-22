@@ -64,11 +64,11 @@ class Commands
 
   def self.here(params)
     if run = current_user_run(params)
+      run.update(active: false)
       if run.orders.empty?
         respond I18n.t('commands.here.success')
       else
         tags = run.orders.map { |order| "<@#{order.orderer_id}>" }.join(' ')
-        run.update(active: false)
         respond_in_channel I18n.t('commands.here.success_with_tags', tags: tags, name: run.runner)
       end
     else
