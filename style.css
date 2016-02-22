@@ -21,7 +21,6 @@ body {
 
 .install-button {
   display: inline-block;
-  padding-top: 2rem;
 }
 
 .colored {
@@ -46,6 +45,7 @@ header h1 {
 
 header p {
   font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
 main {
@@ -89,7 +89,13 @@ main .response.double-line {
 }
 
 main .installation {
-  text-align: center
+  margin-top: 4rem;
+  text-align: center;
+}
+
+main .installation h2 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
 }
 
 footer {
