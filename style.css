@@ -16,15 +16,17 @@ body {
 
 body {
   font-family: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
+  color: #444;
 }
 
 .install-button {
   display: inline-block;
-  padding: 2rem 0;
+  padding-top: 2rem;
 }
 
 header {
   padding: 3rem;
+  background-color: #E8C480;
   text-align: center;
 }
 
@@ -42,24 +44,28 @@ header p {
   font-size: 2rem;
 }
 
+main {
+  padding: 3rem 1rem;
+}
+
 main .usage {
   max-width: 800px;
   margin: 0 auto;
 }
 
-main h3 {
+main h2 {
   margin-bottom: 1rem;
 }
 
 main .message {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   padding: 0.7rem;
   border: 2px solid #E0E0E0;
   border-radius: 6px;
 }
 
 main .response {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 main .response.single-line {
@@ -75,10 +81,16 @@ main .installation {
 }
 
 footer {
-  padding: 2rem;
+  padding: 2.5rem;
+  background-color: #E8C480;
   text-align: center;
 }
 
-footer p {
+footer p:first-child {
   margin-bottom: 0.5rem;
+}
+
+footer a,
+footer a:visited {
+  color: inherit;
 }
