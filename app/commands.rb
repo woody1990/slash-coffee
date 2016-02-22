@@ -64,7 +64,7 @@ class Commands
 
   def self.here(params)
     if run = current_user_run(params)
-      if run.orders.empty
+      if run.orders.empty?
         respond I18n.t('commands.here.success')
       else
         tags = run.orders.map { |order| "<@#{order.orderer_id}>" }.join(' ')
