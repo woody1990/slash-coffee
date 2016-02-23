@@ -1,0 +1,43 @@
+.usage {
+  h2 {
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  }
+
+  .message {
+    margin-bottom: 1.5rem;
+    padding: 0.7rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+  }
+
+  .response {
+    margin-bottom: 3rem;
+    max-width: 100%;
+
+    &.single-line {
+      height: 50px;
+    }
+
+    &.double-line {
+      height: 70px;
+    }
+
+    @include media-query($breakpoint-width) {
+      &.single-line,
+      &.double-line {
+        height: auto;
+      }
+    }
+  }
+}
+
+.installation {
+  margin-top: 4rem;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+}

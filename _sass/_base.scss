@@ -1,0 +1,72 @@
+/* Super minimal reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Lato', 'Helvetica Neue', 'Arial', sans-serif;
+  color: $font-color;
+}
+
+a, a:visited {
+  color: inherit;
+}
+
+.install-button {
+  display: inline-block;
+}
+
+.colored {
+  background-image: linear-gradient(to bottom right, #ffca34 0%, #ffb32c 100%);
+  background-color: #ffb32c;
+}
+
+header {
+  padding: 3rem;
+  text-align: center;
+
+  .coffee {
+    width: 16rem;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    margin-bottom: 2rem;
+    font-size: 5rem;
+  }
+
+  p {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.main {
+  padding: 3rem 1rem;
+  max-width: $content-width;
+  margin: 0 auto;
+}
+
+footer {
+  padding: 2.5rem;
+  text-align: center;
+
+  p {
+    margin-bottom: 0.5rem;
+  }
+}

@@ -2,3 +2,6 @@
 .powder
 tmp/
 .bundle/
+_site
+.sass-cache
+.jekyll-metadata
