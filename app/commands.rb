@@ -2,7 +2,7 @@ require './models/run'
 require './models/order'
 
 class Commands
-  def self.run_command(params)  
+  def self.run_command(params)
     args = params['text'].split
     response = case args.first
       when 'run' then start(args[1], params)
@@ -23,8 +23,8 @@ class Commands
         respond I18n.t('commands.start.time_missing')
       else
         run = Run.create(
-          team_id: params['team_id'], 
-          channel_id: params['channel_id'], 
+          team_id: params['team_id'],
+          channel_id: params['channel_id'],
           user_id: params['user_id'],
           runner: params['user_name'],
           time: time)
@@ -68,7 +68,7 @@ class Commands
       if run.orders.empty?
         respond I18n.t('commands.here.success')
       else
-        tags = run.orders.map { |order| "<@#{order.orderer_id}>" }.join(' ')
+        tags = run.orders.pluck(:orderer_id).uniq.map { |order| "<@#{order.orderer_id}>" }.join(' ')
         respond_in_channel I18n.t('commands.here.success_with_tags', tags: tags, name: run.runner)
       end
     else
