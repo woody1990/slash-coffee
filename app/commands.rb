@@ -68,7 +68,7 @@ class Commands
       if run.orders.empty?
         respond I18n.t('commands.here.success')
       else
-        tags = run.orders.pluck(:orderer_id).uniq.map { |order| "<@#{order.orderer_id}>" }.join(' ')
+        tags = run.orders.pluck(:orderer_id).uniq.map { |orderer_id| "<@#{orderer_id}>" }.join(' ')
         respond_in_channel I18n.t('commands.here.success_with_tags', tags: tags, name: run.runner)
       end
     else
