@@ -2,3 +2,4 @@
 .powder
 tmp/
 .bundle/
+.env
