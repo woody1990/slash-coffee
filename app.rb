@@ -18,5 +18,5 @@ get '/authed' do
   uri.query = URI.encode_www_form(uri_params)
   Net::HTTP.get_response(uri)
 
-  I18n.t('auth.success')
+  redirect 'http://coffee.agelber.com/authed/'
 end
