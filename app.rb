@@ -14,8 +14,8 @@ end
 
 get '/authed' do
   uri = URI('https://slack.com/api/oauth.access')
-  params = {client_id: ENV['SLACK_CLIENT_ID'], client_secret: ENV['SLACK_CLIENT_SECRET'], code: params['code']}
-  uri.query = URI.encode_www_form(params)
+  uri_params = {client_id: ENV['SLACK_CLIENT_ID'], client_secret: ENV['SLACK_CLIENT_SECRET'], code: params['code']}
+  uri.query = URI.encode_www_form(uri_params)
   Net::HTTP.get_response(uri)
 
   I18n.t('auth.success')
