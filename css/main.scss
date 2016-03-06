@@ -12,8 +12,7 @@ $breakpoint-width: 600px;
   }
 }
 
-@import
-        "base",
-        "landing",
-        "privacy"
-;
+@import "base";
+@import "landing";
+@import "privacy";
+@import "authed";
