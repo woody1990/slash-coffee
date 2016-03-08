@@ -5,7 +5,7 @@ require './config/i18n'
 require './config/environments'
 require './app/commands'
 
-get '/coffee' do
+post '/coffee' do
   content_type :json
 
   response = Commands.run_command(params)
