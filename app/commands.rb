@@ -19,16 +19,16 @@ class Commands
     if run = current_channel_run(params)
       respond I18n.t('commands.start.already_on_run', name: run.runner)
     else
+      run = Run.create(
+        team_id: params['team_id'],
+        channel_id: params['channel_id'],
+        user_id: params['user_id'],
+        runner: params['user_name'],
+        time: time)
       if time.nil?
-        respond I18n.t('commands.start.time_missing')
+        respond_in_channel I18n.t('commands.start.success', name: run.runner)
       else
-        run = Run.create(
-          team_id: params['team_id'],
-          channel_id: params['channel_id'],
-          user_id: params['user_id'],
-          runner: params['user_name'],
-          time: time)
-        respond_in_channel I18n.t('commands.start.success', name: run.runner, time: time)
+        respond_in_channel I18n.t('commands.start.success_with_time', name: run.runner, time: time)
       end
     end
   end

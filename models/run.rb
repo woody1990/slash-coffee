@@ -8,6 +8,6 @@ class Run < ActiveRecord::Base
   scope :by_user,    ->(user) { where(user_id: user) }
 
   def timed_out?
-    Time.now.utc > (created_at + time.minutes + TIMEOUT_THRESHOLD).utc
+    Time.now.utc > (created_at + (time.try(:minutes) || 0) + TIMEOUT_THRESHOLD).utc
   end
 end
