@@ -1,5 +1,6 @@
-require './models/run'
-require './models/order'
+require './app/models/run'
+require './app/models/order'
+require './app/slack_response'
 
 class Commands
   def self.run_command(params)
@@ -17,7 +18,7 @@ class Commands
 
   def self.start(time, params)
     if run = current_channel_run(params)
-      respond I18n.t('commands.start.already_on_run', name: run.runner)
+      return SlackResponse.ephemaral I18n.t('commands.start.already_on_run', name: run.runner)
     else
       run = Run.create(
         team_id: params['team_id'],
@@ -26,9 +27,9 @@ class Commands
         runner: params['user_name'],
         time: time)
       if time.nil?
-        respond_in_channel I18n.t('commands.start.success', name: run.runner)
+        return SlackResponse.in_channel I18n.t('commands.start.success', name: run.runner)
       else
-        respond_in_channel I18n.t('commands.start.success_with_time', name: run.runner, time: time)
+        return SlackResponse.in_channel I18n.t('commands.start.success_with_time', name: run.runner, time: time)
       end
     end
   end
@@ -36,29 +37,29 @@ class Commands
   def self.order(user_name, user_id, item, params)
     if run = current_channel_run(params)
       if item.nil?
-        respond I18n.t('commands.order.order_missing', name: run.runner)
+        return SlackResponse.ephemaral I18n.t('commands.order.order_missing', name: run.runner)
       else
         run.orders.create(orderer: user_name, orderer_id: user_id, item: item)
-        respond I18n.t('commands.order.success', item: item)
+        return SlackResponse.ephemaral I18n.t('commands.order.success', item: item)
       end
     else
-      respond I18n.t('commands.order.no_run')
+      return SlackResponse.ephemaral I18n.t('commands.order.no_run')
     end
   end
 
   def self.list(params)
     if run = current_channel_run(params)
       if run.orders.empty?
-        respond I18n.t('commands.list.no_orders')
+        return SlackResponse.ephemaral I18n.t('commands.list.no_orders')
       else
         list = [I18n.t('commands.list.success_header')]
         run.orders.each_with_index do |order, index|
           list << I18n.t('commands.list.success_item', index: index + 1, item: order.item, name: order.orderer)
         end
-        respond list.join("\n")
+        return SlackResponse.ephemaral list.join("\n")
       end
     else
-      respond I18n.t('commands.list.no_run')
+      return SlackResponse.ephemaral I18n.t('commands.list.no_run')
     end
   end
 
@@ -66,18 +67,18 @@ class Commands
     if run = current_user_run(params)
       run.update(active: false)
       if run.orders.empty?
-        respond I18n.t('commands.here.success')
+        return SlackResponse.ephemaral I18n.t('commands.here.success')
       else
         tags = run.orders.pluck(:orderer_id).uniq.map { |orderer_id| "<@#{orderer_id}>" }.join(' ')
-        respond_in_channel I18n.t('commands.here.success_with_tags', tags: tags, name: run.runner)
+        return SlackResponse.in_channel I18n.t('commands.here.success_with_tags', tags: tags, name: run.runner)
       end
     else
-      respond I18n.t('commands.here.no_run')
+      return SlackResponse.ephemaral I18n.t('commands.here.no_run')
     end
   end
 
   def self.help
-    respond I18n.t('commands.help')
+    return SlackResponse.ephemaral I18n.t('commands.help')
   end
 
   def self.current_user_run(params)
@@ -97,13 +98,5 @@ class Commands
     else
       run
     end
-  end
-
-  def self.respond(text)
-    {text: text}
-  end
-
-  def self.respond_in_channel(text)
-    {response_type: 'in_channel', text: text}
   end
 end
