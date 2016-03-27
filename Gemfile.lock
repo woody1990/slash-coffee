@@ -25,6 +25,7 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
+    rake (11.1.1)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -45,8 +46,9 @@ DEPENDENCIES
   dotenv
   pg
   puma
+  rake
   sinatra
   sinatra-activerecord
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
