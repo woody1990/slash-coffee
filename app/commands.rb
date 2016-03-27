@@ -1,30 +1,39 @@
 require './app/models/run'
 require './app/models/order'
+require './app/current'
 require './app/slack_response'
 
 class Commands
-  def self.run_command(params)
-    args = params['text'].split
-    response = case args.first
-      when 'run' then start(args[1], params)
-      when 'order' then order(params['user_name'], params['user_id'], args[1..-1].join(' '), params)
-      when 'list' then list(params)
-      when 'here' then here(params)
-      else help
+  def initialize(params)
+    @text = params['text']
+    @team_id = params['team_id']
+    @channel_id = params['channel_id']
+    @user_id = params['user_id']
+    @user_name = params['user_name']
+  end
+
+  def run
+    args = @text.split
+    return case args.first
+    when 'run' then start(args[1])
+    when 'order' then order(args[1..-1].join(' '))
+    when 'list' then list
+    when 'here' then here
+    else help
     end
   end
 
   private
 
-  def self.start(time, params)
-    if run = current_channel_run(params)
+  def start(time)
+    if run = Current.channel_run(@team_id, @channel_id)
       return SlackResponse.ephemaral I18n.t('commands.start.already_on_run', name: run.runner)
     else
       run = Run.create(
-        team_id: params['team_id'],
-        channel_id: params['channel_id'],
-        user_id: params['user_id'],
-        runner: params['user_name'],
+        team_id: @team_id,
+        channel_id: @channel_id,
+        user_id: @user_id,
+        runner: @user_name,
         time: time)
       if time.nil?
         return SlackResponse.in_channel I18n.t('commands.start.success', name: run.runner)
@@ -34,12 +43,12 @@ class Commands
     end
   end
 
-  def self.order(user_name, user_id, item, params)
-    if run = current_channel_run(params)
+  def order(item)
+    if run = Current.channel_run(@team_id, @channel_id)
       if item.nil?
         return SlackResponse.ephemaral I18n.t('commands.order.order_missing', name: run.runner)
       else
-        run.orders.create(orderer: user_name, orderer_id: user_id, item: item)
+        run.orders.create(orderer: @user_name, orderer_id: @user_id, item: item)
         return SlackResponse.ephemaral I18n.t('commands.order.success', item: item)
       end
     else
@@ -47,8 +56,8 @@ class Commands
     end
   end
 
-  def self.list(params)
-    if run = current_channel_run(params)
+  def list
+    if run = Current.channel_run(@team_id, @channel_id)
       if run.orders.empty?
         return SlackResponse.ephemaral I18n.t('commands.list.no_orders')
       else
@@ -63,8 +72,8 @@ class Commands
     end
   end
 
-  def self.here(params)
-    if run = current_user_run(params)
+  def here
+    if run = Current.user_run(@team_id, @channel_id, @user_id)
       run.update(active: false)
       if run.orders.empty?
         return SlackResponse.ephemaral I18n.t('commands.here.success')
@@ -77,26 +86,7 @@ class Commands
     end
   end
 
-  def self.help
+  def help
     return SlackResponse.ephemaral I18n.t('commands.help')
-  end
-
-  def self.current_user_run(params)
-    run = Run.active.in_channel(params['team_id'], params['channel_id']).by_user(params['user_id']).first
-    deactivate_if_timed_out(run)
-  end
-
-  def self.current_channel_run(params)
-     run = Run.active.in_channel(params['team_id'], params['channel_id']).first
-     deactivate_if_timed_out(run)
-  end
-
-  def self.deactivate_if_timed_out(run)
-    if run && run.timed_out?
-      run.update(active: false)
-      nil
-    else
-      run
-    end
   end
 end

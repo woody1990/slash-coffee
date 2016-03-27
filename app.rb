@@ -5,11 +5,10 @@ require './config/i18n'
 require './config/environments'
 require './app/commands'
 
-post '/coffee' do
+get '/coffee' do
   content_type :json
 
-  response = Commands.run_command(params)
-  response.to_json
+  Commands.new(params).run.to_json
 end
 
 get '/authed' do
