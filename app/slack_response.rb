@@ -1,4 +1,6 @@
 class SlackResponse
+  attr_accessor :text, :in_channel
+
   def initialize(text, in_channel = false)
     @text = text
     @in_channel = in_channel

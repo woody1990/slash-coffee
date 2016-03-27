@@ -3,5 +3,11 @@ development:
   database: development
   host: localhost
 
+test:
+  adapter: postgresql
+  database: development
+  host: localhost
+
+
 production:
   adapter: postgresql
