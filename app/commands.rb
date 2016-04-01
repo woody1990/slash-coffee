@@ -9,12 +9,13 @@ class Commands
     channel_id = params['channel_id']
     user_id = params['user_id']
     user_name = params['user_name']
+    current_run = Current.channel_run(team_id, channel_id)
     args = params['text'].split
     return case args.first
-    when 'run'   then start(Current.channel_run(team_id, channel_id), team_id, channel_id, user_id, user_name, args[1])
-    when 'order' then order(Current.channel_run(team_id, channel_id), user_id, user_name, args[1..-1].join(' '))
-    when 'list'  then  list(Current.channel_run(team_id, channel_id))
-    when 'here'  then  here(Current.user_run(team_id, channel_id, user_id))
+    when 'run'   then start(current_run, team_id, channel_id, user_id, user_name, args[1])
+    when 'order' then order(current_run, user_id, user_name, args[1..-1].join(' '))
+    when 'list'  then list(current_run)
+    when 'here'  then here(current_run, user_id)
     else help
     end
   end
@@ -68,8 +69,8 @@ class Commands
     end
   end
 
-  def self.here(run)
-    if run
+  def self.here(run, user_id)
+    if run && run.user_id == user_id
       run.update(active: false)
       if run.orders.empty?
         return SlackResponse.ephemaral I18n.t('commands.here.success')
