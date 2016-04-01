@@ -8,7 +8,7 @@ require './app/commands'
 get '/coffee' do
   content_type :json
 
-  Commands.new(params).run.to_json
+  Commands.execute(params).to_json
 end
 
 get '/authed' do

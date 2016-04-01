@@ -1,28 +1,9 @@
 class SlackResponse
-  attr_accessor :text, :in_channel
-
-  def initialize(text, in_channel = false)
-    @text = text
-    @in_channel = in_channel
+  def self.ephemaral(text)
+    {text: text}
   end
 
-  def response
-    response = {text: @text}
-    response[:response_type] = 'in_channel' if @in_channel
-    response
-  end
-
-  def to_json
-    response.to_json
-  end
-
-  class << self
-    def ephemaral(text)
-      SlackResponse.new(text)
-    end
-
-    def in_channel(text)
-      SlackResponse.new(text, true)
-    end
+  def self.in_channel(text)
+    {text: text, response_type: 'in_channel'}
   end
 end
