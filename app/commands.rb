@@ -11,19 +11,19 @@ class Commands
     user_name = params['user_name']
     args = params['text'].split
     return case args.first
-    when 'run' then start(team_id, channel_id, user_id, user_name, args[1])
-    when 'order' then order(team_id, channel_id, user_id, user_name, args[1..-1].join(' '))
-    when 'list' then list(team_id, channel_id)
-    when 'here' then here(team_id, channel_id, user_id)
+    when 'run'   then start(Current.channel_run(team_id, channel_id), team_id, channel_id, user_id, user_name, args[1])
+    when 'order' then order(Current.channel_run(team_id, channel_id), user_id, user_name, args[1..-1].join(' '))
+    when 'list'  then  list(Current.channel_run(team_id, channel_id))
+    when 'here'  then  here(Current.user_run(team_id, channel_id, user_id))
     else help
     end
   end
 
   private
 
-  def self.start(team_id, channel_id, user_id, user_name, time)
-    if run = Current.channel_run(team_id, channel_id)
-      return SlackResponse.ephemaral I18n.t('commands.start.already_on_run', name: run.runner)
+  def self.start(current_run, team_id, channel_id, user_id, user_name, time)
+    if current_run
+      return SlackResponse.ephemaral I18n.t('commands.start.already_on_run', name: current_run.runner)
     else
       run = Run.create(
         team_id: team_id,
@@ -39,8 +39,8 @@ class Commands
     end
   end
 
-  def self.order(team_id, channel_id, user_id, user_name, item)
-    if run = Current.channel_run(team_id, channel_id)
+  def self.order(run, user_id, user_name, item)
+    if run
       if item.nil?
         return SlackResponse.ephemaral I18n.t('commands.order.order_missing', name: run.runner)
       else
@@ -52,8 +52,8 @@ class Commands
     end
   end
 
-  def self.list(team_id, channel_id)
-    if run = Current.channel_run(team_id, channel_id)
+  def self.list(run)
+    if run
       if run.orders.empty?
         return SlackResponse.ephemaral I18n.t('commands.list.no_orders')
       else
@@ -68,8 +68,8 @@ class Commands
     end
   end
 
-  def self.here(team_id, channel_id, user_id)
-    if run = Current.user_run(team_id, channel_id, user_id)
+  def self.here(run)
+    if run
       run.update(active: false)
       if run.orders.empty?
         return SlackResponse.ephemaral I18n.t('commands.here.success')
