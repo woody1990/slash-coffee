@@ -8,7 +8,7 @@ class Commands
     current_run = Current.channel_run(team_id, channel_id)
     command, rest = text.split(' ', 2)
     return case command
-    when 'run'   then start(current_run, team_id, channel_id, user_id, user_name, rest)
+    when 'run'   then start(current_run, team_id, channel_id, user_id, user_name, rest.to_i)
     when 'order' then order(current_run, user_id, user_name, rest)
     when 'list'  then list(current_run)
     when 'here'  then here(current_run, user_id)
@@ -28,7 +28,7 @@ class Commands
         user_id: user_id,
         runner: user_name,
         time: time)
-      if time.nil?
+      if time.nil? || time.zero?
         return SlackResponse.in_channel I18n.t('commands.start.success', name: run.runner)
       else
         return SlackResponse.in_channel I18n.t('commands.start.success_with_time', name: run.runner, time: time)
