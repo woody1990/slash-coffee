@@ -4,16 +4,12 @@ require './app/current'
 require './app/slack_response'
 
 class Commands
-  def self.execute(params)
-    team_id = params['team_id']
-    channel_id = params['channel_id']
-    user_id = params['user_id']
-    user_name = params['user_name']
+  def self.execute(team_id, channel_id, user_id, user_name, text)
     current_run = Current.channel_run(team_id, channel_id)
-    args = params['text'].split
-    return case args.first
-    when 'run'   then start(current_run, team_id, channel_id, user_id, user_name, args[1])
-    when 'order' then order(current_run, user_id, user_name, args[1..-1].join(' '))
+    command, rest = text.split(' ', 2)
+    return case command
+    when 'run'   then start(current_run, team_id, channel_id, user_id, user_name, rest)
+    when 'order' then order(current_run, user_id, user_name, rest)
     when 'list'  then list(current_run)
     when 'here'  then here(current_run, user_id)
     else help
