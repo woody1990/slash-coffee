@@ -10,7 +10,7 @@ post '/coffee' do
 
   if params['token'] == ENV['SLACK_VERIFICATION_TOKEN']
     team_id = params['team_id']
-    team_name = params['team_name']
+    team_name = params['team_domain']
     channel_id = params['channel_id']
     channel_name = params['channel_name']
     user_id = params['user_id']
