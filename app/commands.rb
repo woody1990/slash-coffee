@@ -4,11 +4,11 @@ require './app/current'
 require './app/slack_response'
 
 class Commands
-  def self.execute(team_id, channel_id, user_id, user_name, text)
+  def self.execute(team_id, team_name, channel_id, channel_name, user_id, user_name, text)
     current_run = Current.channel_run(team_id, channel_id)
     command, rest = text.split(' ', 2)
     return case command
-    when 'run'   then start(current_run, team_id, channel_id, user_id, user_name, rest.to_i)
+    when 'run'   then start(current_run, team_id, team_name, channel_id, channel_name, user_id, user_name, rest.to_i)
     when 'order' then order(current_run, user_id, user_name, rest)
     when 'list'  then list(current_run)
     when 'here'  then here(current_run, user_id)
@@ -18,13 +18,15 @@ class Commands
 
   private
 
-  def self.start(current_run, team_id, channel_id, user_id, user_name, time)
+  def self.start(current_run, team_id, team_name, channel_id, channel_name, user_id, user_name, time)
     if current_run
       return SlackResponse.ephemaral I18n.t('commands.start.already_on_run', name: current_run.runner)
     else
       run = Run.create(
         team_id: team_id,
+        team_name: team_name,
         channel_id: channel_id,
+        channel_name: channel_name,
         user_id: user_id,
         runner: user_name,
         time: time)

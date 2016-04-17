@@ -8,18 +8,18 @@ describe Commands do
 
   describe '::start' do
     it 'retuns an error when there is already a run' do
-      run = Run.create(team_id: 'T1', channel_id: 'C1', user_id: 'U1', runner: 'runner')
-      Commands.send(:start, run, 'T1', 'C1', 'U1', 'runner', 1).must_equal({text: I18n.t('commands.start.already_on_run', name: run.runner)})
+      run = Run.create(team_id: 'T1', team_name: 'TN1', channel_id: 'C1', channel_name: 'CN1', user_id: 'U1', runner: 'runner')
+      Commands.send(:start, run, 'T1', 'TN1', 'C1', 'CN1', 'U1', 'runner', 3).must_equal({text: I18n.t('commands.start.already_on_run', name: run.runner)})
     end
 
     describe 'when no time is given' do
       it 'returns a confirmation' do
         expected_text = I18n.t('commands.start.success', name: 'runner')
-        Commands.send(:start, nil, 'T1', 'C1', 'U1', 'runner', nil).must_equal({text: expected_text, response_type: 'in_channel'})
+        Commands.send(:start, nil, 'T1', 'TN1', 'C1', 'CN1', 'U1', 'runner', nil).must_equal({text: expected_text, response_type: 'in_channel'})
       end
 
       it 'creates a run' do
-        Commands.send(:start, nil, 'T1', 'C1', 'U1', 'runner', nil)
+        Commands.send(:start, nil, 'T1', 'TN1', 'C1', 'CN1', 'U1', 'runner', nil)
         Run.all.count.must_equal 1
       end
     end
@@ -27,11 +27,11 @@ describe Commands do
     describe 'when a time is given' do
       it 'returns a confirmation' do
         expected_text = I18n.t('commands.start.success_with_time', name: 'runner', time: 3)
-        Commands.send(:start, nil, 'T1', 'C1', 'U1', 'runner', 3).must_equal({text: expected_text, response_type: 'in_channel'})
+        Commands.send(:start, nil, 'T1', 'TN1', 'C1', 'CN1', 'U1', 'runner', 3).must_equal({text: expected_text, response_type: 'in_channel'})
       end
 
       it 'creates a run' do
-        Commands.send(:start, nil, 'T1', 'C1', 'U1', 'runner', 3)
+        Commands.send(:start, nil, 'T1', 'TN1', 'C1', 'CN1', 'U1', 'runner', 3)
         Run.all.count.must_equal 1
       end
     end

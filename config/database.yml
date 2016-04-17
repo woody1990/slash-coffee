@@ -5,9 +5,8 @@ development:
 
 test:
   adapter: postgresql
-  database: development
+  database: test
   host: localhost
-
 
 production:
   adapter: postgresql
