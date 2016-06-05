@@ -6,18 +6,9 @@ Each run is created on a channel level, meaning that different channels can have
 
 ## Installation
 
-The command is not yet packaged as a slack app, so you're going to have to roll your own for now.
+Visit [coffee.agelber.com](http://coffee.agelber.com) and you can follow the instructions from there.
 
-To do so:
-
-1. Clone this repository
-2. Deploy it you your server of choice ([Heroku](http://heroku.com/) works well)
-3. Go to your slack team's integration list
-4. Add a slash command for `/coffee`
-5. Set it to point to your url with a '/coffee' at the end (e.g. `http://yourawesomedomain.com/coffee`)
-6. Set the method to `POST`
-7. Name it whatever you like and fill in all the descriptions if you wish
-8. Done! :tada:
+If you don't want to install this through the Slack app directory, you could deploy it on your own and add a custom integration through the Slack admin panel.
 
 ## Usage
 
