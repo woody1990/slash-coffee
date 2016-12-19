@@ -44,7 +44,8 @@ class Commands
         return SlackResponse.ephemaral I18n.t('commands.order.order_missing', name: run.runner)
       else
         run.orders.create(orderer: user_name, orderer_id: user_id, item: item)
-        return SlackResponse.ephemaral I18n.t('commands.order.success', item: item)
+        alert(run,user_name,item)
+        return SlackResponse.ephemaral I18n.t('commands.order.success', item: item) 
       end
     else
       return SlackResponse.ephemaral I18n.t('commands.order.no_run')
@@ -83,5 +84,9 @@ class Commands
 
   def self.help
     return SlackResponse.ephemaral I18n.t('commands.help')
+  end
+
+  def self.alert(user_name,order)
+      return SlackResponse.ephemaral I18n.t('commands.order.alert',orderer: user_name, item: item)
   end
 end

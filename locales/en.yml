@@ -8,6 +8,7 @@ en:
       no_run: "No one is on a run now, are you in the right channel?\nAlternatively, use `/coffee run` to go yourself!"
       order_missing: "%{name} needs to know what you want! Try `/coffee order cappuccino` for example."
       success: "Great! Your %{item} was added to the list."
+      alert: "Hey! %{orderer} has added %{item} to the list."
     list:
       no_run: "No one is on a run now, are you in the right channel?\nAlternatively, use `/coffee run` to go yourself!"
       no_orders: 'No one has ordered anything yet.'
